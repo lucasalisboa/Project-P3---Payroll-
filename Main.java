@@ -12,6 +12,22 @@ public class Main {
         int[][] calendar  = new int [12][31];
         int c1 = 0, c2 = 0;
 
+        while(c1<100)
+        {
+            if(c2 == 10)
+            {
+                c1++;
+                c2 = 0;
+            }
+            else
+            {
+                payroll[c1][c2] = 'NULL';
+                c2++;
+            }
+        }
+        c1 = 0;
+        c2 = 0;
+
         while(c1 < 12)
         {
             if(c1 % 2 == 0)
@@ -89,10 +105,10 @@ public class Main {
 
         System.out.println("\n");
 
-        action(calendar,c1,c2,day);
+        action(calendar,c1,c2,day,payroll);
     }
 
-    public static void action(int calendar[][],int c1,int c2,int day)
+    public static void action(int calendar[][],int c1,int c2,int day, String payroll[][])
     {
 
         Locale.setDefault(Locale.US);
@@ -117,7 +133,8 @@ public class Main {
 
         if(operation == 1 )
         {
-
+            hire(payroll);
+            action(calendar,c1,c2,day,payroll);
         }
         else if(operation == 2 )
         {
@@ -180,14 +197,19 @@ public class Main {
             {
                 day = 1;
             }
-            action(calendar,c1,c2,day);
+            action(calendar,c1,c2,day,payroll);
         }
         else
         {
             System.out.println("INVALID OPERATION");
             System.out.println("PLEASE, TRY AGAIN\n");
-            action(calendar,c1,c2,day);
+            action(calendar,c1,c2,day,payroll);
         }
+
+    }
+
+    public static void hire(String payroll[][])
+    {
 
     }
 }
