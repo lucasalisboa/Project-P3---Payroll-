@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.Locale;
 import java.util.Scanner;
+import java.lang.String;
 
 public class Main {
 
@@ -84,8 +85,7 @@ public class Main {
         c2 --;
 
         System.out.println("MONTH:");
-        Scanner sd = new Scanner(System.in);
-        c1 = sd.nextInt();
+        c1 = sc.nextInt();
         c1 --;
 
         System.out.printf("YOUR DATA IS %d/%d\n",c2+1,c1+1);
@@ -100,8 +100,9 @@ public class Main {
         System.out.println("7- SUNDAY");
 
         int day;
-        Scanner fd = new Scanner(System.in);
-        day = fd.nextInt();
+        day = sc.nextInt();
+
+        sc.close();
 
         System.out.println("\n");
 
@@ -130,10 +131,11 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         operation = sc.nextInt();
         System.out.println(" ");
+        sc.close();
 
         if(operation == 1 )
         {
-            hire(payroll);
+            hire(payroll,0,0);
             action(calendar,c1,c2,day,payroll);
         }
         else if(operation == 2 )
@@ -208,8 +210,14 @@ public class Main {
 
     }
 
-    public static void hire(String payroll[][])
+    public static void hire(String payroll[][],int c1, int c2)
     {
-
+        if(payroll[c1][0] == "NULL")
+        {
+            System.out.println("WHAT'S THE NAME?");
+            Scanner sc = new Scanner(System.in);
+            payroll[c1][0] = sc.nextLine();
+            System.out.println(payroll[c1][0]);
+        }
     }
 }
