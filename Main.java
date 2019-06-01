@@ -21,7 +21,7 @@ public class Main {
             }
             else
             {
-                payroll[c1][c2] = 'NULL';
+                payroll[c1][c2] = "NULL";
                 c2++;
             }
         }
