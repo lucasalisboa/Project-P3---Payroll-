@@ -101,11 +101,10 @@ public class Main {
         int day;
         day = sc.nextInt();
 
-        sc.close();
-
         System.out.println("\n");
 
         action(calendar,c1,c2,day,payroll);
+        sc.close();
     }
 
     public static void action(int calendar[][],int c1,int c2,int day, String payroll[][])
@@ -130,8 +129,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         operation = sc.nextInt();
         System.out.println(" ");
-
-        sc.close();
+        
 
         if(operation == 1 )
         {
