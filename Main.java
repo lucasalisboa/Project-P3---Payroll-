@@ -129,7 +129,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         operation = sc.nextInt();
         System.out.println(" ");
-        
+
 
         if(operation == 1 )
         {
@@ -138,7 +138,11 @@ public class Main {
         }
         else if(operation == 2 )
         {
-
+            String name;
+            sc.nextLine();
+            name = sc.nextLine();
+            fire(name,payroll,0);
+            action(calendar,c1,c2,day,payroll);
         }
         else if(operation == 3 )
         {
@@ -212,15 +216,66 @@ public class Main {
     {
         if(payroll[c1][0] == "NULL")
         {
-            System.out.println("WHAT'S THE NAME?");
             Scanner sc = new Scanner(System.in);
+
+            System.out.println("WHAT'S THE NAME?");
             payroll[c1][0] = sc.nextLine();
 
             System.out.println("WHAT'S THE ADDRESS?");
             payroll[c1][1] = sc.nextLine();
-            System.out.println(payroll[c1][1]);
 
+            System.out.println("WHAT'S THE TYPE?");
+            System.out.println("H- HOURLY; S- SALARIED; C- COMMISSIONED");
+            payroll[c1][2] = sc.nextLine();
 
+            System.out.println("WHAT'S THE SALARY?");
+            payroll[c1][3] = sc.nextLine();
+
+            System.out.println("SYNDICATED?");
+            payroll[c1][4] = sc.nextLine();
+
+            if(payroll[c1][4] == "NO")
+            {
+                payroll[c1][5] = "0";
+                payroll[c1][6] = "NULL";
+            }
+            else
+            {
+                System.out.println("WHAT'S THE TAX?");
+                payroll[c1][5] = sc.nextLine();
+                System.out.println("WHAT'S THE IDENTIFICATION?");
+                payroll[c1][6] = sc.nextLine();
+            }
+
+            payroll[c1][7] = "0"; // Hours worked or sales
+
+            System.out.println("WHAT'S THE PAYMENT METHOD?");
+            System.out.println("BA- BANK ACCOUNT; CH- CHECK IN HANDS; CC- CHECK BY COURIER");
+            payroll[c1][8] = sc.nextLine();
+
+        }
+        else
+        {
+            c1++;
+            hire(payroll,c1);
+        }
+    }
+    public static void fire(String name,String payroll[][],int c1)
+    {
+        if(payroll[c1][0] == name)
+        {
+            int c2=0;
+            while(c2 < 10)
+            {
+                payroll[c1][c2] = "NULL";
+                c2++;
+            }
+            System.out.printf("EMPLOYER %s was remover\n",name);
+        }
+        else
+        {
+            c1++;
+            fire(name,payroll,c1);
         }
     }
 }
