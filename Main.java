@@ -113,33 +113,64 @@ public class Main {
         if (operation == 1) {
             hire(payroll, 0);
             action(calendar, c1, c2, day, payroll);
-        } else if (operation == 2) {
+        }
+        else if (operation == 2) {
+            System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
             name = sc.nextLine();
             fire(name, payroll, 0);
             action(calendar, c1, c2, day, payroll);
-        } else if (operation == 3) {
+        }
+        else if (operation == 3) {
+            System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
             name = sc.nextLine();
             point(name, payroll, 0);
             action(calendar, c1, c2, day, payroll);
-        } else if (operation == 4) {
+        }
+        else if (operation == 4) {
 
-        } else if (operation == 5) {
+        }
+        else if (operation == 5)
+        {
 
-        } else if (operation == 6) {
+        }
+        else if (operation == 6)
+        {
+            System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
+            String name;
+            sc.nextLine();
+            name = sc.nextLine();
+            System.out.println("WHAT INFORMATION YOU WANT TO CHANGE?");
+            System.out.println("1- NAME");
+            System.out.println("2- ADDRESS");
+            System.out.println("3- TYPE");
+            System.out.println("4- PAYMENT METHOD");
+            System.out.println("5- SYNDICATED");
+            System.out.println("6- IDENTIFICATION");
+            System.out.println("7- SYNDICATE TAX");
 
-        } else if (operation == 7) {
+            int option;
+            option = sc.nextInt();
 
-        } else if (operation == 8) {
+            change(name, payroll, 0, option);
+            action(calendar, c1, c2, day, payroll);
+        }
+        else if (operation == 7) {
 
-        } else if (operation == 9) {
+        }
+        else if (operation == 8) {
 
-        } else if (operation == 10) {
+        }
+        else if (operation == 9) {
 
-        } else if (operation == 11) {
+        }
+        else if (operation == 10) {
+
+        }
+        else if (operation == 11) {
             if (c2 == 30 || calendar[c1][c2 + 1] == 0) {
                 c2 = 0;
 
@@ -242,5 +273,51 @@ public class Main {
             c1++;
             point(name, payroll, c1);
         }
+    }
+
+    public static void change(String name, String payroll[][], int c1,int option)
+    {
+        if(payroll[c1][0].equals(name))
+        {
+            Scanner sc = new Scanner(System.in);
+            if(option == 1)
+            {
+                payroll[c1][0] = sc.nextLine();
+            }
+            else if(option == 2)
+            {
+                payroll[c1][1] = sc.nextLine();
+            }
+            else if(option == 3)
+            {
+                payroll[c1][2] = sc.nextLine();
+            }
+            else if(option == 4)
+            {
+                payroll[c1][8] = sc.nextLine();
+            }
+            else if(option == 5)
+            {
+                payroll[c1][4] = sc.nextLine();
+            }
+            else if(option == 6)
+            {
+                payroll[c1][6] = sc.nextLine();
+            }
+            else if(option == 7)
+            {
+                payroll[c1][5] = sc.nextLine();
+            }
+        }
+        else if (c1 == 100)
+        {
+            System.out.println("Employer doesn't exist\n");
+        }
+        else
+        {
+            c1++;
+            change(name,payroll,c1,option);
+        }
+
     }
 }
