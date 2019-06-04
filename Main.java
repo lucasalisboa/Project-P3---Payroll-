@@ -131,6 +131,12 @@ public class Main {
             action(calendar, c1, c2, day, payroll);
         }
         else if (operation == 4) {
+            System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
+            String name;
+            sc.nextLine();
+            name = sc.nextLine();
+            sale(name, payroll, 0);
+            action(calendar, c1, c2, day, payroll);
 
         }
         else if (operation == 5)
@@ -287,23 +293,29 @@ public class Main {
     }
 
     public static void fire(String name, String payroll[][], int c1) {
-        if (payroll[c1][0].equals(name)) {
+        if (c1 == 100) {
+            System.out.println("Employer doesn't exist\n");
+        }
+        else if (payroll[c1][0].equals(name)) {
             int c2 = 0;
             while (c2 < 10) {
                 payroll[c1][c2] = "NULL";
                 c2++;
             }
             System.out.printf("Employer %s was remover\n\n", name);
-        } else if (c1 == 100) {
-            System.out.println("Employer doesn't exist\n");
-        } else {
+        }
+        else {
             c1++;
             fire(name, payroll, c1);
         }
     }
 
     public static void point(String name, String payroll[][], int c1) {
-        if (payroll[c1][0].equals(name))
+        if (c1 == 100)
+        {
+            System.out.println("Employer doesn't exist\n");
+        }
+        else if (payroll[c1][0].equals(name))
         {
             System.out.println("HOW MANY HOURS THE EMPLOYER WORKED TODAY?");
             double hours = Double.parseDouble(payroll[c1][7]);
@@ -317,10 +329,7 @@ public class Main {
             payroll[c1][7] = Double.toString(nh);
             System.out.printf("The employer has %s hours worked\n",payroll[c1][7]);
         }
-        else if (c1 == 100)
-        {
-            System.out.println("Employer doesn't exist\n");
-        } else
+        else
             {
             c1++;
             point(name, payroll, c1);
@@ -329,7 +338,11 @@ public class Main {
 
     public static void change(String name, String payroll[][], int c1,int option)
     {
-        if(payroll[c1][0].equals(name))
+        if (c1 == 100)
+        {
+        System.out.println("Employer doesn't exist\n");
+        }
+        else if(payroll[c1][0].equals(name))
         {
             Scanner sc = new Scanner(System.in);
             if(option == 1)
@@ -361,15 +374,29 @@ public class Main {
                 payroll[c1][5] = sc.nextLine();
             }
         }
-        else if (c1 == 100)
-        {
-            System.out.println("Employer doesn't exist\n");
-        }
         else
         {
             c1++;
             change(name,payroll,c1,option);
         }
 
+    }
+    public static void sale(String name, String payroll[][], int c1)
+    {
+        if(c1 == 100)
+        {
+            System.out.println("Employer doesn't exist\n");
+        }
+        else if (payroll[c1][0].equals(name))
+        {
+            int s = Integer.parseInt(payroll[c1][7]);
+            s++;
+            payroll[c1][7] = Integer.toString(s);
+        }
+        else
+        {
+            c1++;
+            sale(name,payroll,c1);
+        }
     }
 }
