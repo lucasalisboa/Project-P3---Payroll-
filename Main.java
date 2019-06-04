@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("WELCOME!\n");
-        String[][] payroll = new String[100][11];
+        String[][] payroll = new String[100][12];
         int[][] calendar = new int[12][31];
         int c1 = 0, c2 = 0;
 
@@ -67,8 +67,6 @@ public class Main {
         c1 = sc.nextInt();
         c1--;
 
-        System.out.printf("YOUR DATA IS %d/%d\n", c2 + 1, c1 + 1);
-
         System.out.println("THIS DATA IS:");
         System.out.println("1- MONDAY");
         System.out.println("2- TUESDAY");
@@ -90,6 +88,8 @@ public class Main {
     public static void action(int calendar[][], int c1, int c2, int day, String payroll[][]) {
 
         Locale.setDefault(Locale.US);
+        System.out.printf("YOUR DATA IS %d/%d\n", c2 + 1, c1 + 1);
+
         System.out.println("CHOOSE YOUR OPERATION:");
         System.out.println("1- ADD NEW EMPLOYER");
         System.out.println("2- REMOVE A EMPLOYER");
@@ -111,26 +111,23 @@ public class Main {
 
 
         if (operation == 1) {
-            hire(payroll, 0,calendar, day,c2,c1);
+            hire(payroll, 0);
             action(calendar, c1, c2, day, payroll);
-        }
-        else if (operation == 2) {
+        } else if (operation == 2) {
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
             name = sc.nextLine();
             fire(name, payroll, 0);
             action(calendar, c1, c2, day, payroll);
-        }
-        else if (operation == 3) {
+        } else if (operation == 3) {
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
             name = sc.nextLine();
             point(name, payroll, 0);
             action(calendar, c1, c2, day, payroll);
-        }
-        else if (operation == 4) {
+        } else if (operation == 4) {
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
@@ -138,26 +135,20 @@ public class Main {
             sale(name, payroll, 0);
             action(calendar, c1, c2, day, payroll);
 
-        }
-        else if (operation == 5)
-        {
+        } else if (operation == 5) {
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
             name = sc.nextLine();
             int aux = 0;
-            while (aux < 100)
-            {
-                if(payroll[c1][0].equals(name))
-                {
+            while (aux < 100) {
+                if (payroll[c1][0].equals(name)) {
                     payroll[c1][10] = sc.nextLine();
                 }
                 aux++;
             }
             action(calendar, c1, c2, day, payroll);
-        }
-        else if (operation == 6)
-        {
+        } else if (operation == 6) {
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
@@ -176,26 +167,62 @@ public class Main {
 
             change(name, payroll, 0, option);
             action(calendar, c1, c2, day, payroll);
-        }
-        else if (operation == 7) {
-            payment(payroll,c2,0,0);
-            action(calendar,c1,c2,day,payroll);
-        }
-        else if (operation == 8) {
+        } else if (operation == 7) {
+            payment(payroll, c2, 0, 0);
+            action(calendar, c1, c2, day, payroll);
+        } else if (operation == 8) {
 
-        }
-        else if (operation == 9) {
+        } else if (operation == 9) {
+            System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
+            String name;
+            sc.nextLine();
+            name = sc.nextLine();
+            int aux = 0;
+            while (aux < 100) {
+                if (payroll[c1][0].equals(name)) {
+                    System.out.println(payroll[aux][11]);
+                }
+                aux++;
+            }
 
-        }
-        else if (operation == 10) {
+        } else if (operation == 10) {
+            System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
+            String name;
+            sc.nextLine();
+            name = sc.nextLine();
+            System.out.println("WHAT'S THE SCHEDULE?");
+            System.out.println("P- PATTERN");
+            System.out.println("M1- MONTH FIRST DAY");
+            System.out.println("M7- MONTH DAY SEVEN");
+            System.out.println("MS- MONTH LAST DAY");
+            System.out.println("WM- WEEK ON MONDAYS");
+            System.out.println("WF- MONTH ON FRIDAYS");
+            System.out.println("W2M- 2 WEEKS ON MONDAYS");
+            int aux = 0;
+            while (aux < 100) {
+                if (payroll[c1][0].equals(name)) {
+                    payroll[c1][11] = sc.nextLine();
+                }
+                aux++;
+            }
+            action(calendar, c1, c2, day, payroll);
 
-        }
-        else if (operation == 11) {
-            update(payroll,calendar,c2,c1,day,0);
+        } else if (operation == 11) {
+            update(payroll, calendar, c2, c1, day, 0);
 
             if (c2 == 30 || calendar[c1][c2 + 1] == 0) {
-                c2 = 0;
+                int aux = 0;
+                while (aux < 100) {
+                    if (payroll[c1][9].equals("NULL")) {
+                        aux++;
+                    } else {
+                        int data;
+                        data = (Integer.parseInt(payroll[c1][9]) - c2);
+                        payroll[c1][9] = Integer.toString(data);
+                    }
+                }
 
+                c2 = 0;
                 if (c1 == 11) {
                     c1 = 0;
                 } else {
@@ -209,6 +236,7 @@ public class Main {
             if (day == 8) {
                 day = 1;
             }
+
             action(calendar, c1, c2, day, payroll);
         } else {
             System.out.println("INVALID OPERATION");
@@ -218,7 +246,7 @@ public class Main {
 
     }
 
-    public static void hire(String payroll[][], int c1, int calendar[][], int day, int today, int month) {
+    public static void hire(String payroll[][], int c1) {
         if (payroll[c1][0] == "NULL") {
             Scanner sc = new Scanner(System.in);
 
@@ -259,221 +287,186 @@ public class Main {
             System.out.println("WHAT'S THE PAYMENT BY SERVICE?");
             payroll[c1][10] = sc.nextLine();
 
+            System.out.println("WHAT'S THE SCHEDULE?");
+            System.out.println("P- PATTERN");
+            System.out.println("M1- MONTH FIRST DAY");
+            System.out.println("M7- MONTH DAY SEVEN");
+            System.out.println("MS- MONTH LAST DAY");
+            System.out.println("WM- WEEK ON MONDAYS");
+            System.out.println("WF- MONTH ON FRIDAYS");
+            System.out.println("W2M- 2 WEEKS ON MONDAYS");
+            payroll[c1][11] = sc.nextLine();
+
         } else {
             c1++;
-            hire(payroll, c1, calendar, day, today,month);
+            hire(payroll, c1);
         }
     }
 
     public static void fire(String name, String payroll[][], int c1) {
         if (c1 == 100) {
             System.out.println("Employer doesn't exist\n");
-        }
-        else if (payroll[c1][0].equals(name)) {
+        } else if (payroll[c1][0].equals(name)) {
             int c2 = 0;
             while (c2 < 10) {
                 payroll[c1][c2] = "NULL";
                 c2++;
             }
             System.out.printf("Employer %s was remover\n\n", name);
-        }
-        else {
+        } else {
             c1++;
             fire(name, payroll, c1);
         }
     }
 
     public static void point(String name, String payroll[][], int c1) {
-        if (c1 == 100)
-        {
+        if (c1 == 100) {
             System.out.println("Employer doesn't exist\n");
-        }
-        else if (payroll[c1][0].equals(name))
-        {
+        } else if (payroll[c1][0].equals(name)) {
             System.out.println("HOW MANY HOURS THE EMPLOYER WORKED TODAY?");
             double hours = Double.parseDouble(payroll[c1][7]);
             Scanner sc = new Scanner(System.in);
             double h = sc.nextInt();
-            if(h > 8)
-            {
-                h = (h*1.5);
+            if (h > 8) {
+                h = (h * 1.5);
             }
             double nh = hours + h;
             payroll[c1][7] = Double.toString(nh);
-            System.out.printf("The employer has %s hours worked\n",payroll[c1][7]);
-        }
-        else
-            {
+            System.out.printf("The employer has %s hours worked\n", payroll[c1][7]);
+        } else {
             c1++;
             point(name, payroll, c1);
         }
     }
 
-    public static void change(String name, String payroll[][], int c1,int option)
-    {
-        if (c1 == 100)
-        {
-        System.out.println("Employer doesn't exist\n");
-        }
-        else if(payroll[c1][0].equals(name))
-        {
+    public static void change(String name, String payroll[][], int c1, int option) {
+        if (c1 == 100) {
+            System.out.println("Employer doesn't exist\n");
+        } else if (payroll[c1][0].equals(name)) {
             Scanner sc = new Scanner(System.in);
-            if(option == 1)
-            {
+            if (option == 1) {
                 payroll[c1][0] = sc.nextLine();
-            }
-            else if(option == 2)
-            {
+            } else if (option == 2) {
                 payroll[c1][1] = sc.nextLine();
-            }
-            else if(option == 3)
-            {
+            } else if (option == 3) {
                 payroll[c1][2] = sc.nextLine();
-            }
-            else if(option == 4)
-            {
+            } else if (option == 4) {
                 payroll[c1][8] = sc.nextLine();
-            }
-            else if(option == 5)
-            {
+            } else if (option == 5) {
                 payroll[c1][4] = sc.nextLine();
-            }
-            else if(option == 6)
-            {
+            } else if (option == 6) {
                 payroll[c1][6] = sc.nextLine();
-            }
-            else if(option == 7)
-            {
+            } else if (option == 7) {
                 payroll[c1][5] = sc.nextLine();
             }
-        }
-        else
-        {
+        } else {
             c1++;
-            change(name,payroll,c1,option);
+            change(name, payroll, c1, option);
         }
 
     }
-    public static void sale(String name, String payroll[][], int c1)
-    {
-        if(c1 == 100)
-        {
+
+    public static void sale(String name, String payroll[][], int c1) {
+        if (c1 == 100) {
             System.out.println("Employer doesn't exist\n");
-        }
-        else if (payroll[c1][0].equals(name))
-        {
+        } else if (payroll[c1][0].equals(name)) {
             int s = Integer.parseInt(payroll[c1][7]);
             s++;
             payroll[c1][7] = Integer.toString(s);
-        }
-        else
-        {
+        } else {
             c1++;
-            sale(name,payroll,c1);
+            sale(name, payroll, c1);
         }
     }
-    public static void payment(String payroll[][],int today, int c1, int e)
-    {
-        if(c1 < 100)
-        {
-            if(payroll[c1][9] == Integer.toString(today))
-            {
+
+    public static void payment(String payroll[][], int today, int c1, int e) {
+        if (c1 < 100) {
+            if (payroll[c1][9] == Integer.toString(today)) {
                 System.out.println(payroll[c1][0]);
-                if(payroll[c1][2].equals("S"))
-                {
+                if (payroll[c1][2].equals("S")) {
                     System.out.println(Double.parseDouble(payroll[c1][3]));
-                }
-                else if(payroll[c1][2].equals("H"))
-                {
+                } else if (payroll[c1][2].equals("H")) {
                     double p;
-                    p = Double.parseDouble(payroll[c1][7])* Double.parseDouble(payroll[c1][7]);
+                    p = Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][7]);
                     System.out.println(p);
-                }
-                else
-                {
+                } else {
                     double p;
-                    p = Double.parseDouble(payroll[c1][3])+(Double.parseDouble(payroll[c1][7])* Double.parseDouble(payroll[c1][7]));
+                    p = Double.parseDouble(payroll[c1][3]) + (Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][7]));
                     System.out.println(p);
                 }
                 e++;
             }
             c1++;
-            payment(payroll,today,c1,e);
-        }
-        else
-        {
-            if(e == 0)
-            {
+            payment(payroll, today, c1, e);
+        } else {
+            if (e == 0) {
                 System.out.println("There is no employer to be paid today\n");
             }
         }
     }
-    public static void update(String[][] payroll, int[][] calendar, int today, int month, int day, int c1)
-    {
-        if(c1 == 100)
-        {
+
+    public static void update(String[][] payroll, int[][] calendar, int today, int month, int day, int c1) {
+        if (c1 == 100) {
             return;
-        }
-        else if(c1 < 100)
-        {
-            if(payroll[c1][0].equals("NULL"))
-            {
+        } else if (c1 < 100) {
+            if (payroll[c1][0].equals("NULL")) {
                 c1++;
-                update(payroll,calendar,today,month,day,c1);
-            }
-            else if(Integer.parseInt(payroll[c1][9]) <= today )
-            {
-                if(payroll[c1][2].equals("H"))
-                {
-                    if(payroll[c1][2].equals("H"))
-                    {
-                        int pd = (5 - day);
-                        if (pd >= 0) {
-                            payroll[c1][9] = Integer.toString(today + pd);
-                        }
-                        else{
-                            payroll[c1][9] = Integer.toString(today + (7 + pd));
-                        }
-                    }
-                    else if(payroll[c1][2].equals("S"))
-                    {
-                        while(calendar[month][today] == 1 || today < 30)
-                        {
-                            today ++;
-                            day++;
-                            if(day == 8)
-                            {
-                                day = 1;
+                update(payroll, calendar, today, month, day, c1);
+            } else if (Integer.parseInt(payroll[c1][9]) <= today) {
+                if (payroll[c1][11].equals("P")) {
+                    if (payroll[c1][2].equals("H")) {
+                        if (payroll[c1][2].equals("H")) {
+                            int pd = (5 - day);
+                            if (pd >= 0) {
+                                payroll[c1][9] = Integer.toString(today + pd);
+                            } else {
+                                payroll[c1][9] = Integer.toString(today + (7 + pd));
+                            }
+                        } else if (payroll[c1][2].equals("S")) {
+                            while (calendar[month][today] == 1 || today < 30) {
+                                today++;
+                                day++;
+                                if (day == 8) {
+                                    day = 1;
+                                }
+                            }
+                            today--;
+                            day--;
+                            if (day == 6) {
+                                today--;
+                            } else if (day == 7) {
+                                today = (today - 2);
+                            }
+                            payroll[c1][9] = Integer.toString(today);
+                        } else {
+                            if (day < 5) {
+                                payroll[c1][9] = Integer.toString(today + 7 + (5 - day));
+                            } else {
+                                payroll[c1][9] = Integer.toString(today + (14 + (5 - day)));
                             }
                         }
-                        today--;
-                        day--;
-                        if(day == 6)
-                        {
-                            today --;
-                        }
-                        else if(day == 7)
-                        {
-                            today = (today - 2);
-                        }
-                        payroll[c1][9] = Integer.toString(today);
                     }
-                    else
+                } else if (payroll[c1][11].equals("M1")) {
+                    while (calendar[month][today] == 1 || today < 30) {
+                        today++;
+                        day++;
+                        if (day == 8) {
+                            day = 1;
+                        }
+                    }
+                    if(day == 6)
                     {
-                        if(day < 5)
-                        {
-                            payroll[c1][9] = Integer.toString(today + 7 + (5 - day));
-                        }
-                        else
-                        {
-                            payroll[c1][9] = Integer.toString(today + (14 + (5 - day)));
-                        }
+                        today = today +2;
                     }
+                    else if(day == 7)
+                    {
+                        today++;
+                    }
+                    payroll[c1][9] = Integer.toString(today);
                 }
-                System.out.printf("Employer %s updated\n",payroll[c1][0]);
+                System.out.printf("Employer %s updated\n", payroll[c1][0]);
                 c1++;
-                update(payroll,calendar,today,month,day,c1);
-
+                update(payroll, calendar, today, month, day, c1);
             }
         }
     }
