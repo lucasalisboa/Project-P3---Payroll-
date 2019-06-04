@@ -198,13 +198,7 @@ public class Main {
             System.out.println("WM- WEEK ON MONDAYS");
             System.out.println("WF- MONTH ON FRIDAYS");
             System.out.println("W2M- 2 WEEKS ON MONDAYS");
-            int aux = 0;
-            while (aux < 100) {
-                if (payroll[c1][0].equals(name)) {
-                    payroll[c1][11] = sc.nextLine();
-                }
-                aux++;
-            }
+            s_p(name,payroll,0);
             action(calendar, c1, c2, day, payroll);
 
         } else if (operation == 11) {
@@ -308,14 +302,25 @@ public class Main {
             System.out.println("Employer doesn't exist\n");
         } else if (payroll[c1][0].equals(name)) {
             int c2 = 0;
-            while (c2 < 10) {
+            while (c2 < 12) {
                 payroll[c1][c2] = "NULL";
                 c2++;
             }
-            System.out.printf("Employer %s was remover\n\n", name);
+            System.out.printf("Employer %s was removed\n\n", name);
         } else {
             c1++;
             fire(name, payroll, c1);
+        }
+    }
+    public static void s_p(String name, String payroll[][], int c1) {
+        if (c1 == 100) {
+            System.out.println("Employer doesn't exist\n");
+        } else if (payroll[c1][0].equals(name)) {
+            Scanner sc = new Scanner(System.in);
+            payroll[c1][10] = sc.nextLine();
+        } else {
+            c1++;
+            s_p(name, payroll, c1);
         }
     }
 
@@ -381,19 +386,21 @@ public class Main {
 
     public static void payment(String payroll[][], int today, int c1, int e) {
         if (c1 < 100) {
-            if (payroll[c1][9] == Integer.toString(today)) {
+            if (payroll[c1][9].equals(Integer.toString(today))) {
                 System.out.println(payroll[c1][0]);
+                double p;
                 if (payroll[c1][2].equals("S")) {
-                    System.out.println(Double.parseDouble(payroll[c1][3]));
+                    p =Double.parseDouble(payroll[c1][3]);
                 } else if (payroll[c1][2].equals("H")) {
-                    double p;
                     p = Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][7]);
-                    System.out.println(p);
                 } else {
-                    double p;
                     p = Double.parseDouble(payroll[c1][3]) + (Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][7]));
-                    System.out.println(p);
                 }
+                if(payroll[c1][4].equals("YES"))
+                {
+                    p = p * ((Double.parseDouble(payroll[c1][5]))/100);
+                }
+                System.out.println(p);
                 e++;
             }
             c1++;
@@ -413,6 +420,7 @@ public class Main {
                 c1++;
                 update(payroll, calendar, today, month, day, c1);
             } else if (Integer.parseInt(payroll[c1][9]) <= today) {
+                int aux_t = today, aux_d = day;
                 if (payroll[c1][11].equals("P")) {
                     if (payroll[c1][2].equals("H")) {
                         if (payroll[c1][2].equals("H")) {
@@ -423,51 +431,126 @@ public class Main {
                                 payroll[c1][9] = Integer.toString(today + (7 + pd));
                             }
                         } else if (payroll[c1][2].equals("S")) {
-                            while (calendar[month][today] == 1 || today < 30) {
-                                today++;
-                                day++;
-                                if (day == 8) {
-                                    day = 1;
+                            while (calendar[month][aux_t] == 1 || aux_t < 30) {
+                                aux_t++;
+                                aux_d++;
+                                if (aux_d == 8) {
+                                    aux_d = 1;
                                 }
                             }
-                            today--;
-                            day--;
-                            if (day == 6) {
-                                today--;
+                            aux_t--;
+                            aux_d--;
+                            if (aux_d == 6) {
+                                aux_t--;
                             } else if (day == 7) {
-                                today = (today - 2);
+                                aux_t = (aux_t - 2);
                             }
-                            payroll[c1][9] = Integer.toString(today);
+                            payroll[c1][9] = Integer.toString(aux_t);
                         } else {
                             if (day < 5) {
-                                payroll[c1][9] = Integer.toString(today + 7 + (5 - day));
+                                payroll[c1][9] = Integer.toString(aux_t + 7 + (5 - aux_d));
                             } else {
-                                payroll[c1][9] = Integer.toString(today + (14 + (5 - day)));
+                                payroll[c1][9] = Integer.toString(aux_t + (14 + (5 - aux_d)));
                             }
                         }
                     }
                 } else if (payroll[c1][11].equals("M1")) {
-                    while (calendar[month][today] == 1 || today < 30) {
-                        today++;
-                        day++;
-                        if (day == 8) {
-                            day = 1;
+                    while (calendar[month][aux_t] == 1 || aux_t < 30) {
+                        aux_t++;
+                        aux_d++;
+                        if (aux_d == 8) {
+                            aux_d = 1;
                         }
                     }
-                    if(day == 6)
-                    {
-                        today = today +2;
+                    if (aux_d == 6) {
+                        aux_t = aux_t + 2;
+                    } else if (aux_d == 7) {
+                        aux_t++;
                     }
-                    else if(day == 7)
-                    {
-                        today++;
+                    payroll[c1][9] = Integer.toString(aux_t);
+                } else if (payroll[c1][11].equals("M7")) {
+                    if (aux_t < 7) {
+                        int n = 7 - aux_t;
+                        aux_t = aux_t + n;
+                        while (n > 0) {
+                            aux_d++;
+                            n--;
+                            if (aux_d == 8) {
+                                aux_d = 1;
+                            }
+                        }
+                        if (aux_d == 6) {
+                            aux_t = aux_t + 2;
+                        } else if (aux_d == 7) {
+                            aux_t++;
+                        }
+                        payroll[c1][9] = Integer.toString(aux_t);
+
+                    } else {
+                        while (calendar[month][aux_t] == 1 || aux_t < 30) {
+                            aux_t++;
+                            aux_d++;
+                            if (aux_d == 8) {
+                                aux_d = 1;
+                            }
+                        }
+                        aux_d = aux_d + 6;
+                        aux_t = aux_t + 6;
+
+                        if (aux_d == 6) {
+                            aux_t = aux_t + 2;
+                        } else if (aux_d == 7) {
+                            aux_t++;
+                        }
+                        payroll[c1][9] = Integer.toString(aux_t);
                     }
-                    payroll[c1][9] = Integer.toString(today);
+
+                } else if (payroll[c1][11].equals("MS")) {
+                    while (calendar[month][aux_t] == 1 || aux_t < 30) {
+                        aux_t++;
+                        aux_d++;
+                        if (aux_d == 8) {
+                            aux_d = 1;
+                        }
+                    }
+                    aux_d--;
+                    aux_t--;
+
+                    if (aux_d == 6) {
+                        aux_t--;
+                    } else if (aux_d == 7) {
+                        aux_t = aux_t - 2;
+                    }
+                    payroll[c1][9] = Integer.toString(aux_t);
+                }
+                else if(payroll[c1][11].equals("WM"))
+                {
+                    int n = 8 - aux_d;
+                    payroll[c1][9] = Integer.toString(aux_t+n);
+                }
+                else if(payroll[c1][11].equals("WF"))
+                {
+                    int n;
+                    if(aux_d < 5)
+                    {
+                        n = 5 - aux_d;
+                    }
+                    else
+                    {
+                        n = 7 + (7 - aux_d);
+                    }
+                    payroll[c1][9] = Integer.toString(aux_t+n);
+                }
+                else if(payroll[c1][11].equals("W2M"))
+                {
+                    int n = 15 - aux_d;
+                    payroll[c1][9] = Integer.toString(aux_t+n);
                 }
                 System.out.printf("Employer %s updated\n", payroll[c1][0]);
                 c1++;
                 update(payroll, calendar, today, month, day, c1);
             }
+            }
         }
     }
-}
+
