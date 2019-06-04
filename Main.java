@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("WELCOME!\n");
-        String[][] payroll = new String[100][10];
+        String[][] payroll = new String[100][11];
         int[][] calendar = new int[12][31];
         int c1 = 0, c2 = 0;
 
@@ -111,7 +111,7 @@ public class Main {
 
 
         if (operation == 1) {
-            hire(payroll, 0);
+            hire(payroll, 0,calendar, day,c2,c1);
             action(calendar, c1, c2, day, payroll);
         }
         else if (operation == 2) {
@@ -196,7 +196,7 @@ public class Main {
 
     }
 
-    public static void hire(String payroll[][], int c1) {
+    public static void hire(String payroll[][], int c1, int calendar[][], int day, int today, int month) {
         if (payroll[c1][0] == "NULL") {
             Scanner sc = new Scanner(System.in);
 
@@ -232,9 +232,57 @@ public class Main {
             System.out.println("BA- BANK ACCOUNT; CH- CHECK IN HANDS; CC- CHECK BY COURIER");
             payroll[c1][8] = sc.nextLine();
 
+            // Next payment
+            if(payroll[c1][2].equals("H"))
+            {
+                int pd = (5 - day);
+                if (pd >= 0) {
+                    payroll[c1][9] = Integer.toString(today + pd);
+                }
+                else{
+                    payroll[c1][9] = Integer.toString(today + (7 + pd));
+                }
+            }
+            else if(payroll[c1][2].equals("S"))
+            {
+                while(calendar[month][today] == 1 || today < 30)
+                {
+                    today ++;
+                    day++;
+                    if(day == 8)
+                    {
+                        day = 1;
+                    }
+                }
+                today--;
+                day--;
+                if(day == 6)
+                {
+                    today --;
+                }
+                else if(day == 7)
+                {
+                    today = (today - 2);
+                }
+                payroll[c1][9] = Integer.toString(today);
+            }
+            else
+            {
+                if(day < 5)
+                {
+                    payroll[c1][9] = Integer.toString(today + 7 + (5 - day));
+                }
+                else
+                {
+                    payroll[c1][9] = Integer.toString(today + (14 + (5 - day)));
+                }
+            }
+            System.out.println("WHAT'S THE PAYMENT BY SERVICE?");
+            payroll[c1][10] = sc.nextLine();
+
         } else {
             c1++;
-            hire(payroll, c1);
+            hire(payroll, c1, calendar, day, today,month);
         }
     }
 
@@ -258,11 +306,15 @@ public class Main {
         if (payroll[c1][0].equals(name))
         {
             System.out.println("HOW MANY HOURS THE EMPLOYER WORKED TODAY?");
-            int hours = Integer.parseInt(payroll[c1][7]);
+            double hours = Double.parseDouble(payroll[c1][7]);
             Scanner sc = new Scanner(System.in);
-            int h = sc.nextInt();
-            int nh = hours + h;
-            payroll[c1][7] = Integer.toString(nh);
+            double h = sc.nextInt();
+            if(h > 8)
+            {
+                h = (h*1.5);
+            }
+            double nh = hours + h;
+            payroll[c1][7] = Double.toString(nh);
             System.out.printf("The employer has %s hours worked\n",payroll[c1][7]);
         }
         else if (c1 == 100)
