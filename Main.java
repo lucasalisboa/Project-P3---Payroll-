@@ -379,6 +379,22 @@ public class Main {
             if(payroll[c1][9] == Integer.toString(today))
             {
                 System.out.println(payroll[c1][0]);
+                if(payroll[c1][2].equals("S"))
+                {
+                    System.out.println(Double.parseDouble(payroll[c1][3]));
+                }
+                else if(payroll[c1][2].equals("H"))
+                {
+                    double p;
+                    p = Double.parseDouble(payroll[c1][7])* Double.parseDouble(payroll[c1][7]);
+                    System.out.println(p);
+                }
+                else
+                {
+                    double p;
+                    p = Double.parseDouble(payroll[c1][3])+(Double.parseDouble(payroll[c1][7])* Double.parseDouble(payroll[c1][7]));
+                    System.out.println(p);
+                }
                 e++;
             }
             c1++;
@@ -396,7 +412,6 @@ public class Main {
     {
         if(c1 == 100)
         {
-            System.out.println("Finish");
             return;
         }
         else if(c1 < 100)
