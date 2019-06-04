@@ -141,7 +141,20 @@ public class Main {
         }
         else if (operation == 5)
         {
-
+            System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
+            String name;
+            sc.nextLine();
+            name = sc.nextLine();
+            int aux = 0;
+            while (aux < 100)
+            {
+                if(payroll[c1][0].equals(name))
+                {
+                    payroll[c1][10] = sc.nextLine();
+                }
+                aux++;
+            }
+            action(calendar, c1, c2, day, payroll);
         }
         else if (operation == 6)
         {
@@ -178,6 +191,8 @@ public class Main {
 
         }
         else if (operation == 11) {
+            update(payroll,calendar,c2,c1,day,0);
+
             if (c2 == 30 || calendar[c1][c2 + 1] == 0) {
                 c2 = 0;
 
@@ -239,51 +254,8 @@ public class Main {
             System.out.println("BA- BANK ACCOUNT; CH- CHECK IN HANDS; CC- CHECK BY COURIER");
             payroll[c1][8] = sc.nextLine();
 
-            // Next payment
-            if(payroll[c1][2].equals("H"))
-            {
-                int pd = (5 - day);
-                if (pd >= 0) {
-                    payroll[c1][9] = Integer.toString(today + pd);
-                }
-                else{
-                    payroll[c1][9] = Integer.toString(today + (7 + pd));
-                }
-            }
-            else if(payroll[c1][2].equals("S"))
-            {
-                while(calendar[month][today] == 1 || today < 30)
-                {
-                    today ++;
-                    day++;
-                    if(day == 8)
-                    {
-                        day = 1;
-                    }
-                }
-                today--;
-                day--;
-                if(day == 6)
-                {
-                    today --;
-                }
-                else if(day == 7)
-                {
-                    today = (today - 2);
-                }
-                payroll[c1][9] = Integer.toString(today);
-            }
-            else
-            {
-                if(day < 5)
-                {
-                    payroll[c1][9] = Integer.toString(today + 7 + (5 - day));
-                }
-                else
-                {
-                    payroll[c1][9] = Integer.toString(today + (14 + (5 - day)));
-                }
-            }
+            payroll[c1][9] = "0"; // Next Payment will be write here
+
             System.out.println("WHAT'S THE PAYMENT BY SERVICE?");
             payroll[c1][10] = sc.nextLine();
 
@@ -417,6 +389,76 @@ public class Main {
             if(e == 0)
             {
                 System.out.println("There is no employer to be paid today\n");
+            }
+        }
+    }
+    public static void update(String[][] payroll, int[][] calendar, int today, int month, int day, int c1)
+    {
+        if(c1 == 100)
+        {
+            System.out.println("Finish");
+            return;
+        }
+        else if(c1 < 100)
+        {
+            if(payroll[c1][0].equals("NULL"))
+            {
+                c1++;
+                update(payroll,calendar,today,month,day,c1);
+            }
+            else if(Integer.parseInt(payroll[c1][9]) <= today )
+            {
+                if(payroll[c1][2].equals("H"))
+                {
+                    if(payroll[c1][2].equals("H"))
+                    {
+                        int pd = (5 - day);
+                        if (pd >= 0) {
+                            payroll[c1][9] = Integer.toString(today + pd);
+                        }
+                        else{
+                            payroll[c1][9] = Integer.toString(today + (7 + pd));
+                        }
+                    }
+                    else if(payroll[c1][2].equals("S"))
+                    {
+                        while(calendar[month][today] == 1 || today < 30)
+                        {
+                            today ++;
+                            day++;
+                            if(day == 8)
+                            {
+                                day = 1;
+                            }
+                        }
+                        today--;
+                        day--;
+                        if(day == 6)
+                        {
+                            today --;
+                        }
+                        else if(day == 7)
+                        {
+                            today = (today - 2);
+                        }
+                        payroll[c1][9] = Integer.toString(today);
+                    }
+                    else
+                    {
+                        if(day < 5)
+                        {
+                            payroll[c1][9] = Integer.toString(today + 7 + (5 - day));
+                        }
+                        else
+                        {
+                            payroll[c1][9] = Integer.toString(today + (14 + (5 - day)));
+                        }
+                    }
+                }
+                System.out.printf("Employer %s updated\n",payroll[c1][0]);
+                c1++;
+                update(payroll,calendar,today,month,day,c1);
+
             }
         }
     }
