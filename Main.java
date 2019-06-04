@@ -165,7 +165,8 @@ public class Main {
             action(calendar, c1, c2, day, payroll);
         }
         else if (operation == 7) {
-
+            payment(payroll,c2,0,0);
+            action(calendar,c1,c2,day,payroll);
         }
         else if (operation == 8) {
 
@@ -397,6 +398,26 @@ public class Main {
         {
             c1++;
             sale(name,payroll,c1);
+        }
+    }
+    public static void payment(String payroll[][],int today, int c1, int e)
+    {
+        if(c1 < 100)
+        {
+            if(payroll[c1][9] == Integer.toString(today))
+            {
+                System.out.println(payroll[c1][0]);
+                e++;
+            }
+            c1++;
+            payment(payroll,today,c1,e);
+        }
+        else
+        {
+            if(e == 0)
+            {
+                System.out.println("There is no employer to be paid today\n");
+            }
         }
     }
 }
