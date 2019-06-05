@@ -474,7 +474,6 @@ public class Main {
             } else if (Integer.parseInt(payroll[c1][9]) <= today) {
                 int aux_t = today, aux_d = day;
                 if (payroll[c1][11].equals("P")) {
-                    if (payroll[c1][2].equals("H")) {
                         if (payroll[c1][2].equals("H")) {
                             int pd = (5 - day);
                             if (pd >= 0) {
@@ -504,7 +503,6 @@ public class Main {
                             } else {
                                 payroll[c1][9] = Integer.toString(aux_t + (14 + (5 - aux_d)));
                             }
-                        }
                     }
                 } else if (payroll[c1][11].equals("M1")) {
                     while (calendar[month][aux_t] == 1 || aux_t < 30) {
@@ -558,7 +556,7 @@ public class Main {
                     }
 
                 } else if (payroll[c1][11].equals("MS")) {
-                    while (calendar[month][aux_t] == 1 && aux_t < 30) {
+                    while (calendar[month][aux_t] == 1 && aux_t <= 30) {
                         aux_t++;
                         aux_d++;
                         if (aux_d == 8) {
