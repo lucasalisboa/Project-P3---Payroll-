@@ -386,28 +386,39 @@ public class Main {
 
     public static void payment(String payroll[][], int today, int c1, int e) {
         if (c1 < 100) {
-            if (payroll[c1][9].equals(Integer.toString(today))) {
-                System.out.println(payroll[c1][0]);
-                double p;
-                if (payroll[c1][2].equals("S")) {
-                    p =Double.parseDouble(payroll[c1][3]);
-                } else if (payroll[c1][2].equals("H")) {
-                    p = Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][7]);
-                } else {
-                    p = Double.parseDouble(payroll[c1][3]) + (Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][7]));
-                }
-                if(payroll[c1][4].equals("YES"))
-                {
-                    p = p * ((Double.parseDouble(payroll[c1][5]))/100);
-                }
-                System.out.println(p);
-                e++;
+            if(payroll[c1][0] == "NULL")
+            {
+                c1++;
+                payment(payroll, today, c1, e);
             }
-            c1++;
-            payment(payroll, today, c1, e);
-        } else {
+
+            else {
+                int aux_t = Integer.parseInt(payroll[c1][9]);
+                if(aux_t == today) {
+                    System.out.println(payroll[c1][0]);
+                    double p;
+                    if (payroll[c1][2].equals("S")) {
+                        p =Double.parseDouble(payroll[c1][3]);
+                    } else if (payroll[c1][2].equals("H")) {
+                        p = Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][7]);
+                    } else {
+                        p = Double.parseDouble(payroll[c1][3]) + (Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][7]));
+                    }
+                    if(payroll[c1][4].equals("YES"))
+                    {
+                        p = p * ((Double.parseDouble(payroll[c1][5]))/100);
+                    }
+                    System.out.println(p);
+                    e++;
+                }
+                c1++;
+                payment(payroll, today, c1, e);
+            }
+        }
+        else {
             if (e == 0) {
                 System.out.println("There is no employer to be paid today\n");
+                return;
             }
         }
     }
