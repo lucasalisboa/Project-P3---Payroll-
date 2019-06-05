@@ -26,13 +26,12 @@ public class Main {
         c2 = 0;
 
         while (c1 < 12) {
-            if (c1 % 2 == 0) {
+            if (c1 == 0||c1 == 2|| c1 == 4|| c1 == 6|| c1 == 7 || c1 == 9||c1 == 11) {
+                calendar[c1][c2] = 1;
                 if (c2 == 30) {
-                    calendar[c1][c2] = 1;
                     c1++;
                     c2 = 0;
                 } else {
-                    calendar[c1][c2] = 1;
                     c2++;
                 }
             } else if (c1 == 1) {
@@ -484,7 +483,7 @@ public class Main {
                                 payroll[c1][9] = Integer.toString(today + (7 + pd));
                             }
                         } else if (payroll[c1][2].equals("S")) {
-                            while (calendar[month][aux_t] == 1 && aux_t < 30) {
+                            while (calendar[month][aux_t] == 1 && aux_t <= 30) {
                                 aux_t++;
                                 aux_d++;
                                 if (aux_d == 8) {
@@ -540,7 +539,7 @@ public class Main {
                         payroll[c1][9] = Integer.toString(aux_t);
 
                     } else {
-                        while (calendar[month][aux_t] == 1 || aux_t < 30) {
+                        while (calendar[month][aux_t] == 1 || aux_t <= 30) {
                             aux_t++;
                             aux_d++;
                             if (aux_d == 8) {
