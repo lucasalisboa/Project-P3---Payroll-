@@ -110,6 +110,14 @@ public class Main {
         operation = sc.nextInt();
         System.out.println(" ");
 
+        if(r == 0)
+        {
+            if(operation != 8)
+            {
+                r++;
+            }
+        }
+
 
         if (operation == 1) {
             write_previous(payroll,previous,0,0);
