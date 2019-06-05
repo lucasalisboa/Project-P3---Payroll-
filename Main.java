@@ -8,15 +8,17 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("WELCOME!\n");
         String[][] payroll = new String[100][12];
+        String[][] previous = new String[100][12];
         int[][] calendar = new int[12][31];
         int c1 = 0, c2 = 0;
 
         while (c1 < 100) {
-            if (c2 == 10) {
+            if (c2 == 12) {
                 c1++;
                 c2 = 0;
             } else {
                 payroll[c1][c2] = "NULL";
+                previous[c1][c2] = "NULL";
                 c2++;
             }
         }
@@ -81,11 +83,11 @@ public class Main {
 
         System.out.println("\n");
 
-        action(calendar, c1, c2, day, payroll);
+        action(calendar, c1, c2, day, payroll,previous,1);
         sc.close();
     }
 
-    public static void action(int calendar[][], int c1, int c2, int day, String payroll[][]) {
+    public static void action(int calendar[][], int c1, int c2, int day, String payroll[][], String previous[][],int r) {
 
         Locale.setDefault(Locale.US);
         System.out.printf("YOUR DATA IS %d/%d\n", c2 + 1, c1 + 1);
@@ -111,31 +113,36 @@ public class Main {
 
 
         if (operation == 1) {
+            write_previous(payroll,previous,0,0);
             hire(payroll, 0);
-            action(calendar, c1, c2, day, payroll);
+            action(calendar, c1, c2, day, payroll,previous,r);
         } else if (operation == 2) {
+            write_previous(payroll,previous,0,0);
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
             name = sc.nextLine();
             fire(name, payroll, 0);
-            action(calendar, c1, c2, day, payroll);
+            action(calendar, c1, c2, day, payroll,previous,r);
         } else if (operation == 3) {
+            write_previous(payroll,previous,0,0);
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
             name = sc.nextLine();
             point(name, payroll, 0);
-            action(calendar, c1, c2, day, payroll);
+            action(calendar, c1, c2, day, payroll,previous,r);
         } else if (operation == 4) {
+            write_previous(payroll,previous,0,0);
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
             name = sc.nextLine();
             sale(name, payroll, 0);
-            action(calendar, c1, c2, day, payroll);
+            action(calendar, c1, c2, day, payroll,previous,r);
 
         } else if (operation == 5) {
+            write_previous(payroll,previous,0,0);
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
@@ -147,8 +154,9 @@ public class Main {
                 }
                 aux++;
             }
-            action(calendar, c1, c2, day, payroll);
+            action(calendar, c1, c2, day, payroll,previous,r);
         } else if (operation == 6) {
+            write_previous(payroll,previous,0,0);
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
@@ -166,13 +174,44 @@ public class Main {
             option = sc.nextInt();
 
             change(name, payroll, 0, option);
-            action(calendar, c1, c2, day, payroll);
+            action(calendar, c1, c2, day, payroll,previous,r);
         } else if (operation == 7) {
+            write_previous(payroll,previous,0,0);
             payment(payroll, c2, 0, 0);
-            action(calendar, c1, c2, day, payroll);
+            action(calendar, c1, c2, day, payroll,previous,r);
         } else if (operation == 8) {
+            System.out.println("1- UNDO, 2- REDO");
+            int option;
+            option = sc.nextInt();
+            if(option == 1)
+            {
+                if(r <= 0)
+                {
+                    System.out.println("YOU CAN'T DO A UNDO NOW");
+                    action(calendar, c1, c2, day, payroll,previous,r);
+                }
+                else
+                    {
+                        r--;
+                    action(calendar, c1, c2, day, previous, payroll,r);
+                }
+            }
+            else
+            {
+                if(r > 0)
+                {
+                    System.out.println("YOU CAN'T DO A REDO NOW");
+                    action(calendar, c1, c2, day, payroll,previous,r);
+                }
+                else
+                {
+                    r++;
+                    action(calendar, c1, c2, day, previous, payroll,r);
+                }
+            }
 
         } else if (operation == 9) {
+            write_previous(payroll,previous,0,0);
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
@@ -184,8 +223,10 @@ public class Main {
                 }
                 aux++;
             }
+            action(calendar, c1, c2, day, payroll,previous,r);
 
         } else if (operation == 10) {
+            write_previous(payroll,previous,0,0);
             System.out.println("PLEASE, ENTER WITH THE EMPLOYER'S NAME");
             String name;
             sc.nextLine();
@@ -199,9 +240,10 @@ public class Main {
             System.out.println("WF- MONTH ON FRIDAYS");
             System.out.println("W2M- 2 WEEKS ON MONDAYS");
             s_p(name,payroll,0);
-            action(calendar, c1, c2, day, payroll);
+            action(calendar, c1, c2, day, payroll,previous,r);
 
         } else if (operation == 11) {
+            write_previous(payroll,previous,0,0);
             update(payroll, calendar, c2, c1, day, 0);
 
             if (c2 == 30 || calendar[c1][c2 + 1] == 0) {
@@ -231,11 +273,11 @@ public class Main {
                 day = 1;
             }
 
-            action(calendar, c1, c2, day, payroll);
+            action(calendar, c1, c2, day, payroll,previous,r);
         } else {
             System.out.println("INVALID OPERATION");
             System.out.println("PLEASE, TRY AGAIN\n");
-            action(calendar, c1, c2, day, payroll);
+            action(calendar, c1, c2, day, payroll,previous,r);
         }
 
     }
@@ -406,7 +448,7 @@ public class Main {
                     }
                     if(payroll[c1][4].equals("YES"))
                     {
-                        p = p * ((Double.parseDouble(payroll[c1][5]))/100);
+                        p = p - (p * ((Double.parseDouble(payroll[c1][5]))/100));
                     }
                     System.out.println(p);
                     e++;
@@ -442,7 +484,7 @@ public class Main {
                                 payroll[c1][9] = Integer.toString(today + (7 + pd));
                             }
                         } else if (payroll[c1][2].equals("S")) {
-                            while (calendar[month][aux_t] == 1 || aux_t < 30) {
+                            while (calendar[month][aux_t] == 1 && aux_t < 30) {
                                 aux_t++;
                                 aux_d++;
                                 if (aux_d == 8) {
@@ -517,7 +559,7 @@ public class Main {
                     }
 
                 } else if (payroll[c1][11].equals("MS")) {
-                    while (calendar[month][aux_t] == 1 || aux_t < 30) {
+                    while (calendar[month][aux_t] == 1 && aux_t < 30) {
                         aux_t++;
                         aux_d++;
                         if (aux_d == 8) {
@@ -561,6 +603,18 @@ public class Main {
                 c1++;
                 update(payroll, calendar, today, month, day, c1);
             }
+            }
+        }
+        public static void write_previous(String payroll[][],String previous[][],int c1, int c2)
+        {
+            while (c1 < 100) {
+                if (c2 == 12) {
+                    c1++;
+                    c2 = 0;
+                } else {
+                    previous[c1][c2] = payroll[c1][c2];
+                    c2++;
+                }
             }
         }
     }
