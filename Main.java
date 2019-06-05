@@ -449,9 +449,9 @@ public class Main {
                     if (payroll[c1][2].equals("S")) {
                         p =Double.parseDouble(payroll[c1][3]);
                     } else if (payroll[c1][2].equals("H")) {
-                        p = Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][7]);
+                        p = Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][10]);
                     } else {
-                        p = Double.parseDouble(payroll[c1][3]) + (Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][7]));
+                        p = Double.parseDouble(payroll[c1][3]) + (Double.parseDouble(payroll[c1][7]) * Double.parseDouble(payroll[c1][10]));
                     }
                     if(payroll[c1][4].equals("YES"))
                     {
